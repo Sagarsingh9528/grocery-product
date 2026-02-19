@@ -1,16 +1,25 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import AppRoutes from "./routes/AppRoutes";
+
+import { AuthProvider } from "./context/AuthContext";
+import { ProductProvider } from "./context/ProductContext";
+import { CartProvider } from "./context/CartContext";
+import { OrderProvider } from "./context/OrderContext";
+import { LocationProvider } from "./context/LocationContext";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <h1>Hello Grocery!</h1>
-    </>
-  )
+    <AuthProvider>
+      <ProductProvider>
+        <CartProvider>
+          <OrderProvider>
+            <LocationProvider>
+              <AppRoutes />
+            </LocationProvider>
+          </OrderProvider>
+        </CartProvider>
+      </ProductProvider>
+    </AuthProvider>
+  );
 }
 
-export default App
+export default App;
