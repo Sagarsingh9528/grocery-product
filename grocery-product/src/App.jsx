@@ -1,10 +1,11 @@
-import AppRoutes from "./routes/AppRoutes";
+// import AppRoutes from "./routes/AppRoutes";
 
 import { AuthProvider } from "./context/AuthContext";
 import { ProductProvider } from "./context/ProductContext";
 import { CartProvider } from "./context/CartContext";
 import { OrderProvider } from "./context/OrderContext";
 import { LocationProvider } from "./context/LocationContext";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
@@ -13,7 +14,8 @@ function App() {
         <CartProvider>
           <OrderProvider>
             <LocationProvider>
-              <AppRoutes />
+              <Navbar />
+              {/* <AppRoutes /> */}
             </LocationProvider>
           </OrderProvider>
         </CartProvider>
