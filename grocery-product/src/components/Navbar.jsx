@@ -11,10 +11,10 @@ const Navbar = () => {
   return (
     <nav className="bg-white shadow-sm px-8 py-3 flex items-center justify-between">
 
-      {/* LEFT */}
+     
       <div className="flex items-center gap-6 flex-nowrap">
 
-        {/* Logo */}
+       
         <Link to="/" className="flex items-center">
           <img
             src={assets.logo}
@@ -23,12 +23,12 @@ const Navbar = () => {
           />
         </Link>
 
-        {/* Seller Dashboard */}
+        
         <button className="border px-4 py-1 rounded-full text-gray-700 whitespace-nowrap">
           Seller Dashboard
         </button>
 
-        {/* Links */}
+       
         <div className="flex gap-6 text-gray-700 font-medium whitespace-nowrap">
           <Link to="/">Home</Link>
           <Link to="/products">All Product</Link>
@@ -36,7 +36,7 @@ const Navbar = () => {
 
       </div>
 
-      {/* CENTER — SEARCH */}
+      
       <div className="flex items-center bg-gray-100 px-5 py-2 rounded-full w-[420px]">
 
         <input
@@ -52,16 +52,16 @@ const Navbar = () => {
         />
       </div>
 
-      {/* RIGHT */}
+      
       <div className="flex items-center gap-6">
 
-        {/* CART ICON — BIG */}
+       
         <div className="relative cursor-pointer">
 
           <img
             src={assets.cart_icon}
             alt="cart"
-            className="w-9 h-9"   // ⭐ INCREASED SIZE
+            className="w-9 h-9"   
           />
 
           {totalItems > 0 && (
@@ -72,7 +72,7 @@ const Navbar = () => {
 
         </div>
 
-        {/* LOGIN */}
+        
         {!user && (
           <button className="bg-green-500 text-white px-6 py-2 rounded-full font-medium">
             Login
