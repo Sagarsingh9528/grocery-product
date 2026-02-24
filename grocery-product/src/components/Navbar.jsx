@@ -136,8 +136,6 @@ const Navbar = () => {
           </button>
         </div>
       </div>
-
-      
       {menuOpen && (
         <div className="md:hidden flex flex-col gap-4 mt-4 text-gray-700">
           <button
@@ -167,7 +165,6 @@ const Navbar = () => {
           <NavLink to="/contact" onClick={closeMenu}>
             Contact
           </NavLink>
-
           {!user && (
             <button
               onClick={() => {
