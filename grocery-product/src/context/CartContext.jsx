@@ -18,20 +18,20 @@ export function CartProvider({ children }) {
   }, [items]);
 
   const addItem = (product) => {
-    setItems((prev) => {
-      const found = prev.find((p) => p.id === product.id);
+  setItems((prev) => {
+    const found = prev.find((p) => p.id === product._id);
 
-      if (found) {
-        return prev.map((p) =>
-          p.id === product.id
-            ? { ...p, qty: p.qty + 1 }
-            : p
-        );
-      }
+    if (found) {
+      return prev.map((p) =>
+        p.id === product._id
+          ? { ...p, qty: p.qty + 1 }
+          : p
+      );
+    }
 
-      return [...prev, { ...product, qty: 1 }];
-    });
-  };
+    return [...prev, { ...product, id: product._id, qty: 1 }];
+  });
+};
 
   const removeItem = (id) => {
     setItems((prev) =>

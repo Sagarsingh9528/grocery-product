@@ -8,6 +8,7 @@ import { LocationProvider } from "./context/LocationContext";
 import Navbar from "./components/Navbar";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
+import { Toaster } from "react-hot-toast";
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
         <CartProvider>
           <OrderProvider>
             <LocationProvider>
+               <Toaster position="top-right" />
               {isSellerPath ? null : <Navbar />} 
 
               {/* <AppRoutes /> */}
