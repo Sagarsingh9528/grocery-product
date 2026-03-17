@@ -1,6 +1,6 @@
-// import AppRoutes from "./routes/AppRoutes";
-
-import { AuthProvider } from "./context/AuthContext";
+import {
+  AuthProvider,
+} from "./context/AuthContext";
 import { ProductProvider } from "./context/ProductContext";
 import { CartProvider } from "./context/CartContext";
 import { OrderProvider } from "./context/OrderContext";
@@ -10,25 +10,43 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import { Toaster } from "react-hot-toast";
 import Footer from "./components/Footer";
+import Login from "./components/Login";
+import { useAuth } from "./context/AuthContext";
+
+
+function AppContent() {
+  const isSellerPath = useLocation().pathname.includes("seller");
+  const { user } = useAuth();
+  
+
+  return (
+    <>
+      <Toaster position="top-right" />
+
+      {!isSellerPath && <Navbar />}
+
+      
+
+      <div className={`${isSellerPath ? "" : "px-6 md:px-16 lg:px-24 xl:px-32"}`}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </div>
+
+      {!isSellerPath && <Footer />}
+    </>
+  );
+}
+
 
 function App() {
-
-  const isSellerPath = useLocation().pathname.includes("seller");
-
   return (
     <AuthProvider>
       <ProductProvider>
         <CartProvider>
           <OrderProvider>
             <LocationProvider>
-               <Toaster position="top-right" />
-              {isSellerPath ? null : <Navbar />} 
-              <div className={`${isSellerPath ? "" : "px-6 md:px-16 lg:px-24 xl:px-32 "} `}>
-                <Routes>
-                  <Route path="/" element={<Home/>}/>
-                </Routes>
-              </div>
-              {!isSellerPath && <Footer/>}
+              <AppContent />
             </LocationProvider>
           </OrderProvider>
         </CartProvider>
