@@ -1,74 +1,45 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
+import { dummyProducts } from "../assets/assets";
 
-export const ProductContext = createContext(null);
+export const ProductContext = createContext();
 
 export const ProductProvider = ({ children }) => {
 
-  const [products, setProducts] = useState([]);
+  
+  const [products, setProducts] = useState(dummyProducts);
 
   const [searchQuery, setSearchQuery] = useState("");
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-
-    const dummyProducts = [
-      {
-        id: 1,
-        name: "Fresh Apples",
-        price: 80,
-        category: "Fruits",
-        image: "https://via.placeholder.com/150",
-        sellerId: 101,
-      },
-      {
-        id: 2,
-        name: "Milk 1L",
-        price: 60,
-        category: "Dairy",
-        image: "https://via.placeholder.com/150",
-        sellerId: 102,
-      },
-      {
-        id: 3,
-        name: "Bread",
-        price: 40,
-        category: "Bakery",
-        image: "https://via.placeholder.com/150",
-        sellerId: 101,
-      },
-    ];
-
-    setProducts(dummyProducts);
-    setLoading(false);
-
-  }, []);
-
+ 
   const addProduct = (product) => {
     setProducts((prev) => [
       ...prev,
-      { ...product, id: Date.now() }
+      { ...product, _id: Date.now().toString() }
     ]);
   };
 
-  const removeProduct = (id) => {
+  
+  const removeProduct = (_id) => {
     setProducts((prev) =>
-      prev.filter((p) => p.id !== id)
+      prev.filter((p) => p._id !== _id)
     );
   };
 
+ 
   const filteredProducts = products.filter((p) =>
     p.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const value = {
     products,
-    loading,
-    addProduct,
-    removeProduct,
+    filteredProducts,
     searchQuery,
     setSearchQuery,
-    filteredProducts,
+    addProduct,
+    removeProduct,
+    loading,
   };
 
   return (
@@ -78,6 +49,5 @@ export const ProductProvider = ({ children }) => {
   );
 };
 
-// custom hook
-export const useProducts = () =>
-  useContext(ProductContext);
+
+export const useProducts = () => useContext(ProductContext);

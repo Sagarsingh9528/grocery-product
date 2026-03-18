@@ -33,6 +33,7 @@ export function CartProvider({ children }) {
   });
 };
 
+
   const removeItem = (id) => {
     setItems((prev) =>
       prev.filter((p) => p.id !== id)
@@ -71,6 +72,11 @@ export function CartProvider({ children }) {
     );
   }, [items]);
 
+  const getItemQty = (id) => {
+  const item = items.find((i) => i._id === id);
+  return item ? item.qty : 0;
+};
+
   return (
     <CartContext.Provider
       value={{
@@ -81,6 +87,7 @@ export function CartProvider({ children }) {
         clearCart,
         totalAmount,
         totalItems,
+        getItemQty,
       }}
     >
       {children}
