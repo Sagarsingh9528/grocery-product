@@ -45,6 +45,9 @@ const Navbar = () => {
               <NavLink to="/products" className="hover:text-green-600">
                 All Product
               </NavLink>
+              <NavLink to="/contact" className="hover:text-green-600">
+                Contact
+              </NavLink>
             </div>
           </div>
 

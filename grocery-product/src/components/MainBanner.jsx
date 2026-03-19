@@ -30,7 +30,7 @@ const MainBanner = () => {
         </p>
 
         <div className="mt-6 flex flex-wrap items-center gap-4 justify-center md:justify-start">
-          <button className="bg-green-500 hover:bg-green-600 text-white px-5 md:px-8 py-3 rounded-lg font-semibold">
+          <button onClick={()=> navigate('/products')} className="bg-green-500 hover:bg-green-600 text-white px-5 md:px-8 py-3 rounded-lg font-semibold">
             Shop now
           </button>
 
