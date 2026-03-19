@@ -1,27 +1,39 @@
-import React, { useContext } from "react";
-import { CartContext } from "../context/CartContext";
-import { useProducts } from "../context/ProductContext";
-import toast from "react-hot-toast";
+import React, {useContext} from 'react'
+import { useParams } from 'react-router-dom'
+import { useProducts } from '../context/ProductContext';
+import { CartContext } from '../context/CartContext';
+import toast from 'react-hot-toast';
+import { categories } from '../assets/assets';
 
-const AllProduct = () => {
-  const { addItem, removeItem, updateQty, getItemQty } =
-    useContext(CartContext);
+const ProductCategory = () => {
+    const {categoryName} = useParams();
+    const {products, searchQuery} = useProducts();
+    const { addItem, removeItem, updateQty, getItemQty } = useContext(CartContext);
+    const filtered = products.filter((p)=> p.category.toLowerCase() === categoryName.toLocaleLowerCase()).filter(
+    (p) =>
+      p.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );;
+    const categoryData = categories.find(
+  (cat) => cat.path.toLowerCase() === categoryName.toLowerCase()
+);
 
-  const { filteredProducts } = useProducts(); 
+const displayName = categoryData ? categoryData.text : categoryName;
 
   return (
     <div className="mt-16 px-4 md:px-10">
-      
+
      
       <div className="mb-6">
-        <p className="text-2xl font-medium uppercase">ALL PRODUCTS</p>
-        <div className="w-16 h-0.5 bg-green-500 rounded-full mt-1"></div>
+        <p className="text-2xl font-medium uppercase">
+          {displayName}
+        </p>
+        <div className="w-16 h-0.5 bg-green-500 mt-1"></div>
       </div>
 
-     
-
+      
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
-        {filteredProducts.map((product) => {
+
+        {filtered.map((product) => {
           const qty = getItemQty(product._id);
 
           return (
@@ -29,6 +41,7 @@ const AllProduct = () => {
               key={product._id}
               className="bg-white border rounded-xl p-3 md:p-5 flex flex-col hover:shadow-md transition"
             >
+
               <img
                 src={product.image[0]}
                 alt={product.name}
@@ -39,78 +52,73 @@ const AllProduct = () => {
                 {product.category}
               </p>
 
-
-              <h3 className="font-semibold text-sm md:text-lg line-clamp-2">
+              <h3 className="font-semibold text-sm md:text-lg">
                 {product.name}
               </h3>
 
-             
               <div className="flex items-center justify-between mt-auto">
+
                 <div>
                   <p className="text-green-600 font-semibold">
                     ₹{product.offerPrice}
                   </p>
-
                   <p className="text-gray-400 line-through text-sm">
                     ₹{product.price}
                   </p>
                 </div>
 
-              
+               
                 {qty === 0 ? (
                   <button
+                    toast
                     onClick={() => {
                       addItem(product);
                       toast.success("Added to cart");
                     }}
-                    className="border border-green-500 text-green-600 px-3 py-1 rounded-lg text-sm hover:bg-green-50"
+                    className="border border-green-500 text-green-600 px-3 py-1 rounded-lg text-sm"
                   >
                     Add
                   </button>
                 ) : (
                   <div className="flex items-center gap-2 border border-green-500 rounded-lg px-2 py-1">
-                    
-                   
+
                     <button
                       onClick={() => {
                         if (qty === 1) {
                           removeItem(product._id);
-                          toast("Removed");
+                          toast.success("Removed");
                         } else {
                           updateQty(product._id, qty - 1);
-                          toast.success("item remove ")
+                          toast.success("remove")
                         }
                       }}
-                      className="text-lg px-2"
                     >
                       -
                     </button>
 
-                   
-                    <span className="text-sm font-medium w-5 text-center">
-                      {qty}
-                    </span>
+                    <span>{qty}</span>
 
-                   
                     <button
-                      onClick={() => {
-                        updateQty(product._id, qty + 1);
-                        toast.success("Updated 🔼");
-                      }}
-                      className="text-lg px-2"
+                      onClick={() =>{
+                        updateQty(product._id, qty + 1)
+                        toast.success("Add item");
+                      }
+                      }
                     >
                       +
                     </button>
 
                   </div>
                 )}
+
               </div>
             </div>
           );
         })}
+
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AllProduct;
+export default ProductCategory

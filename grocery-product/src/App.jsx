@@ -12,6 +12,7 @@ import { Toaster } from "react-hot-toast";
 import Footer from "./components/Footer";
 import { useAuth } from "./context/AuthContext";
 import AllProduct from "./pages/AllProduct";
+import ProductCategory from "./pages/ProductCategory";
 
 
 
@@ -31,6 +32,7 @@ function AppContent() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<AllProduct />} />
+          <Route path="/products/:categoryName" element={<ProductCategory />} />
         </Routes>
 
       </div>
