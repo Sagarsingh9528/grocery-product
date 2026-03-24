@@ -13,6 +13,7 @@ import Footer from "./components/Footer";
 import { useAuth } from "./context/AuthContext";
 import AllProduct from "./pages/AllProduct";
 import ProductCategory from "./pages/ProductCategory";
+import ProductDetails from "./pages/ProductDetails";
 
 
 
@@ -33,6 +34,7 @@ function AppContent() {
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<AllProduct />} />
           <Route path="/products/:categoryName" element={<ProductCategory />} />
+          <Route path="/product/:category/:id" element={<ProductDetails />} />
         </Routes>
 
       </div>

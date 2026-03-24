@@ -1,5 +1,5 @@
 import React, {useContext} from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useProducts } from '../context/ProductContext';
 import { CartContext } from '../context/CartContext';
 import toast from 'react-hot-toast';
@@ -7,6 +7,7 @@ import { categories } from '../assets/assets';
 
 const ProductCategory = () => {
     const {categoryName} = useParams();
+    const navigate = useNavigate();
     const {products, searchQuery} = useProducts();
     const { addItem, removeItem, updateQty, getItemQty } = useContext(CartContext);
     const filtered = products.filter((p)=> p.category.toLowerCase() === categoryName.toLocaleLowerCase()).filter(
@@ -20,7 +21,8 @@ const ProductCategory = () => {
 const displayName = categoryData ? categoryData.text : categoryName;
 
   return (
-    <div className="mt-16 px-4 md:px-10">
+    <div
+    className="mt-16 px-4 md:px-10">
 
      
       <div className="mb-6">
@@ -39,6 +41,7 @@ const displayName = categoryData ? categoryData.text : categoryName;
           return (
             <div
               key={product._id}
+               onClick={() => navigate(`/product/${product._id}`)}
               className="bg-white border rounded-xl p-3 md:p-5 flex flex-col hover:shadow-md transition"
             >
 
