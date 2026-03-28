@@ -34,7 +34,7 @@ function AppContent() {
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<AllProduct />} />
           <Route path="/products/:categoryName" element={<ProductCategory />} />
-          <Route path="/product/:category/:id" element={<ProductDetails />} />
+          <Route path="/products/:category/:id" element={<ProductDetails />} />
         </Routes>
 
       </div>

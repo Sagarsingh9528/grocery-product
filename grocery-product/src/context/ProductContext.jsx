@@ -20,6 +20,10 @@ export const ProductProvider = ({ children }) => {
     ]);
   };
 
+  const getProductById = (_id) => {
+  return products.find((p) => p._id === _id);
+};
+
   
   const removeProduct = (_id) => {
     setProducts((prev) =>
@@ -33,14 +37,15 @@ export const ProductProvider = ({ children }) => {
   );
 
   const value = {
-    products,
-    filteredProducts,
-    searchQuery,
-    setSearchQuery,
-    addProduct,
-    removeProduct,
-    loading,
-  };
+  products,
+  filteredProducts,
+  searchQuery,
+  setSearchQuery,
+  addProduct,
+  removeProduct,
+  getProductById, 
+  loading,
+};
 
   return (
     <ProductContext.Provider value={value}>
