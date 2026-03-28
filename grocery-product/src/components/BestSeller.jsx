@@ -2,9 +2,11 @@ import React, { useContext } from "react";
 import { assets, dummyProducts } from "../assets/assets";
 import { CartContext } from "../context/CartContext";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const BestSellers = () => {
   const { items, addItem, updateQty, removeItem } = useContext(CartContext);
+  const navigate = useNavigate();
 
   const bestProducts = dummyProducts.slice(0, 5);
 
@@ -22,6 +24,7 @@ const BestSellers = () => {
           return (
             <div
               key={product._id}
+              onClick={()=>navigate(`/products/category/${product._id}`)}
               className="bg-white rounded-xl border p-3 md:p-5 flex flex-col hover:shadow-md transition"
             >
               
@@ -47,7 +50,7 @@ const BestSellers = () => {
               </div>
 
              
-              <div className="flex items-center justify-between mt-auto">
+              <div onClick={(e)=>e.stopPropagation()} className="flex items-center justify-between mt-auto">
                
                 <div>
                   <p className="text-green-600 text-base md:text-xl font-semibold">
@@ -63,7 +66,7 @@ const BestSellers = () => {
                 {qty === 0 ? (
                   
                   <button
-                    onClick={() => {
+                    onClick={() => { 
                       addItem(product);
                       toast.success("Item added 🛒");
                     }}
@@ -77,7 +80,9 @@ const BestSellers = () => {
                   <div className="flex items-center justify-between border border-green-500 rounded-lg px-2 py-2 min-w-[90px]">
                     
                     <button
+                    
                       onClick={() => {
+                         
                         if (qty === 1) {
                           removeItem(product._id);
                           toast("Item removed");
@@ -86,6 +91,7 @@ const BestSellers = () => {
                           toast("Quantity decreased");
                         }
                       }}
+                      
                       className="text-green-600 font-bold text-lg px-1"
                     >
                       −
@@ -97,6 +103,7 @@ const BestSellers = () => {
                   
                     <button
                       onClick={() => {
+                         
                         updateQty(product._id, qty + 1);
                         toast.success("Quantity increased");
                       }}
