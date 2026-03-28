@@ -41,7 +41,7 @@ const displayName = categoryData ? categoryData.text : categoryName;
           return (
             <div
               key={product._id}
-               onClick={() => navigate(`/product/${product._id}`)}
+               onClick={() => navigate(`/products/${product.category.toLowerCase()}/${product._id}`)}
               className="bg-white border rounded-xl p-3 md:p-5 flex flex-col hover:shadow-md transition"
             >
 
