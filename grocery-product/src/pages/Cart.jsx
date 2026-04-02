@@ -6,7 +6,6 @@ const Cart = () => {
   const { items = [], removeItem, updateQty } = useContext(CartContext);
   const navigate = useNavigate();
 
-  // ✅ SAFE CALCULATIONS
   const subtotal = (items || []).reduce(
     (acc, item) => acc + item.offerPrice * item.qty,
     0
@@ -31,7 +30,6 @@ const Cart = () => {
             </span>
           </h2>
 
-          {/* EMPTY CART */}
           {items.length === 0 ? (
             <div className="text-center py-20">
               <h3 className="text-xl font-semibold mb-2">
@@ -51,21 +49,18 @@ const Cart = () => {
             </div>
           ) : (
             <>
-              {/* HEADER (Desktop only) */}
               <div className="hidden md:grid grid-cols-3 text-gray-500 mb-4">
                 <p>Product Details</p>
                 <p className="text-center">Subtotal</p>
                 <p className="text-center">Action</p>
               </div>
 
-              {/* ITEMS */}
               {items.map((item) => (
                 <div
                   key={item._id}
                   className="border-b py-4 flex flex-col md:grid md:grid-cols-3 gap-4 items-center"
                 >
 
-                  {/* PRODUCT */}
                   <div className="flex gap-4 items-center w-full">
 
                     <img
@@ -83,7 +78,6 @@ const Cart = () => {
                         Weight: N/A
                       </p>
 
-                      {/* QTY */}
                       <div className="flex items-center border rounded mt-2 w-fit">
                         <button
                           onClick={() =>
@@ -110,12 +104,10 @@ const Cart = () => {
                     </div>
                   </div>
 
-                  {/* SUBTOTAL */}
                   <p className="text-center font-medium">
                     ₹{item.offerPrice * item.qty}
                   </p>
 
-                  {/* REMOVE */}
                   <div className="flex justify-center w-full">
                     <button
                       onClick={() => removeItem(item._id)}
@@ -128,7 +120,6 @@ const Cart = () => {
                 </div>
               ))}
 
-              {/* CONTINUE SHOPPING */}
               <button
                 onClick={() => navigate("/products")}
                 className="text-green-600 mt-6"
@@ -139,7 +130,6 @@ const Cart = () => {
           )}
         </div>
 
-        {/* RIGHT SIDE */}
         <div className="bg-gray-100 p-6 rounded-lg h-fit lg:sticky lg:top-24">
 
           <h3 className="text-xl font-semibold mb-4">
@@ -197,7 +187,6 @@ const Cart = () => {
 
       </div>
 
-      {/* MOBILE CHECKOUT BAR */}
       {items.length > 0 && (
         <div className="fixed bottom-0 left-0 right-0 bg-white border-t p-4 flex justify-between items-center md:hidden shadow-lg">
 
