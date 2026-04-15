@@ -3,31 +3,56 @@ import { createContext, useContext, useEffect, useState } from "react";
 export const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-
-  const [user, setUser] = useState(false);
-
-  const [role, setRole] = useState(null);
-
+  const [user, setUser] = useState(null); 
   const [loading, setLoading] = useState(true);
 
-  const login = (userType) => {
+  
+  const signup = (name, email, password, role = "user") => {
+    const users = JSON.parse(localStorage.getItem("users")) || [];
 
-    const fakeUser = {
-      id: Date.now(),
-      name: "Sagar",
-      role: userType,
+    const exist = users.find((u) => u.email === email);
+    if (exist) return false;
+
+    const newUser = {
+      id: Date.now().toString(),
+      name,
+      email,
+      password,
+      role,
     };
 
-    setUser(fakeUser);
-    setRole(userType);
+    localStorage.setItem("users", JSON.stringify([...users, newUser]));
+    return true;
+  };
 
-    localStorage.setItem("authUser", JSON.stringify(fakeUser));
+  
+  const login = (email, password) => {
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+
+    
+    if (email === "admin@gmail.com" && password === "12345") {
+      const admin = { id: "1", name: "Admin", role: "admin" };
+      setUser(admin);
+      localStorage.setItem("authUser", JSON.stringify(admin));
+      return true;
+    }
+
+    const foundUser = users.find(
+      (u) => u.email === email && u.password === password
+    );
+
+    if (foundUser) {
+      setUser(foundUser);
+      localStorage.setItem("authUser", JSON.stringify(foundUser));
+      return true;
+    }
+
+    return false;
   };
 
   
   const logout = () => {
     setUser(null);
-    setRole(null);
     localStorage.removeItem("authUser");
   };
 
@@ -36,9 +61,7 @@ export const AuthProvider = ({ children }) => {
     const storedUser = localStorage.getItem("authUser");
 
     if (storedUser) {
-      const parsedUser = JSON.parse(storedUser);
-      setUser(parsedUser);
-      setRole(parsedUser.role);
+      setUser(JSON.parse(storedUser));
     }
 
     setLoading(false);
@@ -46,11 +69,12 @@ export const AuthProvider = ({ children }) => {
 
   const value = {
     user,
-    role,
     loading,
+    signup,
     login,
     logout,
     isAuthenticated: !!user,
+    role: user?.role || null, 
   };
 
   return (

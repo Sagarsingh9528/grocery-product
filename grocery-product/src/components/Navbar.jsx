@@ -32,7 +32,7 @@ const Navbar = () => {
 
             <div className="hidden md:flex items-center gap-6 whitespace-nowrap">
               <button
-                onClick={() => navigate("/seller")}
+                onClick={() => navigate("/signup")}
                 className="border px-4 py-1 rounded-full"
               >
                 Seller Dashboard
@@ -145,7 +145,7 @@ const Navbar = () => {
           <div className="md:hidden flex flex-col gap-4 mt-4 text-gray-700">
             <button
               onClick={() => {
-                navigate("/seller");
+                navigate("/signup");
                 closeMenu();
               }}
               className="border px-4 py-1 rounded-full w-fit"

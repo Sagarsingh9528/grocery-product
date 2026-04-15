@@ -6,11 +6,17 @@ import toast from "react-hot-toast";
 import { useOrders } from "../context/OrderContext";
 
 const Cart = () => {
-  const { items = [], setItems, removeItem, updateQty } = useContext(CartContext);
+  const {
+    items = [],
+    setItems,
+    removeItem,
+    updateQty,
+  } = useContext(CartContext);
   const navigate = useNavigate();
   const { user } = useAuth();
   const { placeOrder } = useOrders();
   const [selectedPayment, setSelectedPayment] = useState("COD");
+  const savedAddress = JSON.parse(localStorage.getItem("address"));
 
   const subtotal = (items || []).reduce(
     (acc, item) => acc + item.offerPrice * item.qty,
@@ -48,8 +54,8 @@ const Cart = () => {
       "orders",
       JSON.stringify([newOrder, ...existingOrders]),
     );
-    
-    setItems([]); 
+
+    setItems([]);
 
     localStorage.removeItem("cart");
 
@@ -69,9 +75,7 @@ const Cart = () => {
 
           {items.length === 0 ? (
             <div className="text-center py-20">
-              <h3 className="text-xl font-semibold mb-2">
-                Your cart is empty
-              </h3>
+              <h3 className="text-xl font-semibold mb-2">Your cart is empty</h3>
 
               <p className="text-gray-500 mb-4">Add items to get started</p>
 
@@ -163,8 +167,33 @@ const Cart = () => {
 
           <p className="font-medium mb-2">DELIVERY ADDRESS</p>
 
-          <p className="text-sm text-gray-600 mb-4">Your Address Here</p>
+          {savedAddress ? (
+            <div className="text-sm text-gray-600 mb-4">
+              <p>
+                {savedAddress.street}, {savedAddress.city}
+              </p>
+              <p>
+                {savedAddress.state}, {savedAddress.country} -{" "}
+                {savedAddress.zip}
+              </p>
+              <p>{savedAddress.phone}</p>
 
+              <button
+                onClick={() => navigate("/add-address")}
+                className="text-green-600 text-sm mt-2"
+              >
+                Change
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => navigate("/add-address")}
+              className="text-green-600 mb-4"
+            >
+              + Add Address
+            </button>
+          )}
+          
           <p className="font-medium mb-2">PAYMENT METHOD</p>
 
           <select
