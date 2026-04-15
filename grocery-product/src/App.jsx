@@ -15,6 +15,7 @@ import AllProduct from "./pages/AllProduct";
 import ProductCategory from "./pages/ProductCategory";
 import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
+import MyOrders from "./pages/MyOrder";
 
 
 
@@ -37,6 +38,7 @@ function AppContent() {
           <Route path="/products/:categoryName" element={<ProductCategory />} />
           <Route path="/products/:category/:id" element={<ProductDetails />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/my-orders" element={<MyOrders />} />
         </Routes>
 
       </div>

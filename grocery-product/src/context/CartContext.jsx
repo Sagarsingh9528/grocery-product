@@ -88,6 +88,7 @@ export function CartProvider({ children }) {
         totalAmount,
         totalItems,
         getItemQty,
+        setItems
       }}
     >
       {children}
