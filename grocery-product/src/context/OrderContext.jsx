@@ -3,31 +3,26 @@ import { createContext, useContext, useEffect, useState } from "react";
 export const OrderContext = createContext(null);
 
 export function OrderProvider({ children }) {
+  const [orders, setOrders] = useState(() => {
+    const stored = localStorage.getItem("orders");
+    return stored ? JSON.parse(stored) : [];
+  });
 
-  const [orders, setOrders] = useState([]);
   const [currentOrder, setCurrentOrder] = useState(null);
 
-  useEffect(() => {
-    const stored = localStorage.getItem("orders");
-    if (stored) {
-      const parsed = JSON.parse(stored);
-      setOrders(parsed);
-      if (parsed.length > 0) setCurrentOrder(parsed[0]);
-    }
-  }, []);
-
+  
   useEffect(() => {
     localStorage.setItem("orders", JSON.stringify(orders));
   }, [orders]);
 
-  const placeOrder = (cartItems, totalAmount) => {
-    if (!cartItems || cartItems.length === 0) return;
+  
+  const placeOrder = (orderData) => {
+    if (!orderData || !orderData.items?.length) return;
 
     const newOrder = {
       id: Date.now(),
-      items: cartItems,
-      totalAmount,
-      status: "PLACED",
+      ...orderData, 
+      status: "Pending",
       createdAt: new Date().toISOString(),
     };
 
@@ -35,11 +30,10 @@ export function OrderProvider({ children }) {
     setCurrentOrder(newOrder);
   };
 
+  
   const updateOrderStatus = (id, status) => {
     setOrders((prev) =>
-      prev.map((o) =>
-        o.id === id ? { ...o, status } : o
-      )
+      prev.map((o) => (o.id === id ? { ...o, status } : o))
     );
 
     setCurrentOrder((prev) =>
@@ -47,6 +41,7 @@ export function OrderProvider({ children }) {
     );
   };
 
+  
   const clearCurrentOrder = () => {
     setCurrentOrder(null);
   };

@@ -26,8 +26,6 @@ const Cart = () => {
   const tax = subtotal * 0.02;
   const total = subtotal + tax;
   const handlePlaceOrder = () => {
-    const user = JSON.parse(localStorage.getItem("user"));
-
     if (!user) {
       toast.error("Please login first!");
       navigate("/login");
@@ -44,19 +42,21 @@ const Cart = () => {
       userId: user.id || "guest",
       items: items,
       total: total,
-      payment: selectedPayment,
+      paymentMethod: selectedPayment,
+      status: "Pending",
       date: new Date().toLocaleDateString(),
+      address: savedAddress || {},
     };
 
-    const existingOrders = JSON.parse(localStorage.getItem("orders")) || [];
-
-    localStorage.setItem(
-      "orders",
-      JSON.stringify([newOrder, ...existingOrders]),
-    );
+    placeOrder({
+      items,
+      total,
+      paymentMethod: selectedPayment,
+      address: savedAddress,
+      date: new Date().toLocaleDateString(),
+    });
 
     setItems([]);
-
     localStorage.removeItem("cart");
 
     toast.success("Order placed successfully 🎉");
@@ -193,7 +193,7 @@ const Cart = () => {
               + Add Address
             </button>
           )}
-          
+
           <p className="font-medium mb-2">PAYMENT METHOD</p>
 
           <select
